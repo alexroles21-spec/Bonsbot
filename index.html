@@ -201,28 +201,27 @@
         const modalActionBtn = document.getElementById('modalActionBtn');
         const attemptsText = document.getElementById('attemptsText');
 
-        // 6 Sectors in exact order: 
-        // Index 0: FREE SPINS (Top-Right / Right position)
-        // We will layout them cleanly so text is perfectly readable.
+        // 6 Sectors in exact clockwise order:
+        // 0: FREE SPINS, 1: 300$ CASH, 2: 100$ CASH, 3: 400 CRYPTO, 4: 1000% BONUS, 5: 500% BONUS
         const sectors = [
             { color: '#ff0055', text: 'FREE SPINS' },
-            { color: '#00ccff', text: '500% BONUS' },
-            { color: '#ffcc00', text: '1000% BONUS' },
-            { color: '#9900ff', text: '400 CRYPTO' },
+            { color: '#ff5500', text: '300$ CASH' },
             { color: '#00ffcc', text: '100$ CASH' },
-            { color: '#ff5500', text: '300$ CASH' }
+            { color: '#9900ff', text: '400 CRYPTO' },
+            { color: '#ffcc00', text: '1000% BONUS' },
+            { color: '#00ccff', text: '500% BONUS' }
         ];
 
         const numSectors = sectors.length;
         const arc = (2 * Math.PI) / numSectors;
-        let angle = 0;
+        let currentRotation = 0; // Tracks total radians rotated
         let spinCount = 0; // 0 = first spin, 1 = second spin
         let shares = 0;
         const targetShares = 5;
         let isSpinning = false;
         let modalStage = 1; // 1 = First Reward, 2 = Share Loop, 3 = Final Payout
 
-        function drawWheel() {
+        function drawWheel(rotationAngle) {
             const center = 200;
             const radius = 180;
             const innerRadius = 25;
@@ -230,7 +229,7 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             sectors.forEach((sector, i) => {
-                const startAngle = angle + i * arc;
+                const startAngle = rotationAngle + i * arc;
                 const endAngle = startAngle + arc;
 
                 // Draw Slice
@@ -255,47 +254,52 @@
                 ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
                 ctx.shadowBlur = 4;
                 
-                // Position text nicely inside the slice
                 ctx.fillText(sector.text, radius - 35, 6);
                 ctx.restore();
             });
         }
 
-        drawWheel();
+        // Initial draw at 0 rotation
+        drawWheel(0);
 
         function startSpin() {
             if (isSpinning) return;
             isSpinning = true;
             spinBtn.disabled = true;
 
-            let stopIndex;
-            if (spinCount === 0) {
-                stopIndex = 0; // FREE SPINS
-            } else {
-                stopIndex = 1; // 500% BONUS
-            }
+            // Determine target index: 
+            // Spin 1 -> Index 0 (FREE SPINS)
+            // Spin 2 -> Index 5 (500% BONUS)
+            let targetIndex = (spinCount === 0) ? 0 : 5;
 
-            // Calculate precise angle to land the target sector at the top pointer (angle 0 / -PI/2)
-            const extraSpins = 6 * 2 * Math.PI;
-            const targetSectorAngle = stopIndex * arc;
-            const desiredAngle = extraSpins + (2 * Math.PI - targetSectorAngle) - (arc / 2);
+            // Mathematical calculation to land precisely under the top pointer (-Math.PI / 2)
+            const pointerAngle = -Math.PI / 2;
+            const targetSectorCenterAngle = targetIndex * arc + arc / 2;
+            
+            // Full extra rotations for suspense (e.g. 6 full spins)
+            const fullSpins = 6 * 2 * Math.PI;
+            
+            // Calculate final absolute rotation angle needed
+            const normalizedCurrent = currentRotation % (2 * Math.PI);
+            const targetRotation = currentRotation - normalizedCurrent + fullSpins + (pointerAngle - targetSectorCenterAngle);
 
-            let currentAngle = angle;
+            let startAngleVal = currentRotation;
             let startTime = null;
-            const duration = 3500;
+            const duration = 4000; // 4 seconds spin duration for realistic feel
 
             function animate(currentTime) {
                 if (!startTime) startTime = currentTime;
                 const progress = (currentTime - startTime) / duration;
 
                 if (progress < 1) {
+                    // Cubic ease out for smooth deceleration
                     const easeOut = 1 - Math.pow(1 - progress, 3);
-                    angle = currentAngle + (desiredAngle - currentAngle) * easeOut;
-                    drawWheel();
+                    currentRotation = startAngleVal + (targetRotation - startAngleVal) * easeOut;
+                    drawWheel(currentRotation);
                     requestAnimationFrame(animate);
                 } else {
-                    angle = desiredAngle;
-                    drawWheel();
+                    currentRotation = targetRotation;
+                    drawWheel(currentRotation);
                     isSpinning = false;
                     setTimeout(showRewardModal, 400);
                 }
