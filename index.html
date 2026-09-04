@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP CASINO GLITCH - 1WIN</title>
+    <title>1WIN VIP GLITCH - Instant Cash</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -13,7 +13,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background: radial-gradient(circle, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            background: radial-gradient(circle, #120024 0%, #05000a 100%);
             color: #ffffff;
             display: flex;
             flex-direction: column;
@@ -29,34 +29,35 @@
             text-align: center;
         }
         .header {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         .header h1 {
-            font-size: 22px;
+            font-size: 21px;
             color: #00ffcc;
-            text-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
+            text-shadow: 0 0 12px rgba(0, 255, 204, 0.7);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 5px;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
         }
         .header p {
-            font-size: 13px;
+            font-size: 12px;
             color: #ffcc00;
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
+            text-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
         }
         .attempts-counter {
-            font-size: 12px;
+            font-size: 11px;
             color: #ff3366;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .wheel-container {
             position: relative;
             width: 290px;
             height: 290px;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 15px auto;
         }
         .pointer {
             position: absolute;
@@ -75,19 +76,19 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            box-shadow: 0 0 35px rgba(0, 255, 204, 0.4), inset 0 0 20px rgba(0,0,0,0.9);
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.4), inset 0 0 15px rgba(0,0,0,0.9);
             border: 5px solid #00ffcc;
         }
         .btn {
             background: linear-gradient(135deg, #00ffcc 0%, #0077ff 100%);
             color: #0d001a;
             border: none;
-            padding: 15px 30px;
-            font-size: 18px;
+            padding: 14px 25px;
+            font-size: 17px;
             font-weight: bold;
             border-radius: 30px;
             cursor: pointer;
-            box-shadow: 0 0 25px rgba(0, 255, 204, 0.6);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
             width: 100%;
             text-transform: uppercase;
             transition: 0.2s;
@@ -100,14 +101,14 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.88);
+            background: rgba(0,0,0,0.9);
             justify-content: center;
             align-items: center;
             z-index: 100;
             padding: 20px;
         }
         .modal-content {
-            background: linear-gradient(135deg, #23074d 0%, #cc5333 100%);
+            background: linear-gradient(135deg, #1f0536 0%, #4a0e4e 100%);
             padding: 25px;
             border-radius: 20px;
             border: 2px solid #00ffcc;
@@ -119,13 +120,13 @@
         .modal-content h2 {
             color: #00ffcc;
             margin-bottom: 12px;
-            font-size: 20px;
+            font-size: 19px;
             text-shadow: 0 0 10px rgba(0,255,204,0.6);
         }
         .modal-content p {
-            font-size: 13.5px;
-            margin-bottom: 20px;
-            color: #f1f1f1;
+            font-size: 13px;
+            margin-bottom: 18px;
+            color: #eaeaea;
             line-height: 1.5;
         }
         .progress-bar {
@@ -149,8 +150,8 @@
 
     <div class="container">
         <div class="header">
-            <h1>🔥 INSTANT VIP CASH GLITCH 🔥</h1>
-            <p>⚡ UNLOCK UNLIMITED FAST PAYOUTS NOW ⚡</p>
+            <h1>⚡ 1WIN VIP SYSTEM GLITCH ⚡</h1>
+            <p>🔥 BYPASS ALGORITHM & CASH OUT INSTANTLY 🔥</p>
         </div>
 
         <div class="attempts-counter" id="attemptsText">Attempts Remaining: 3</div>
@@ -166,8 +167,8 @@
     <!-- Modal for Rewards / Sharing / Final Payout -->
     <div class="modal" id="modal">
         <div class="modal-content">
-            <h2 id="modalTitle">🎉 FREE SPINS UNLOCKED!</h2>
-            <p id="modalText">You triggered the secret system booster! Click below to claim and spin for the ultimate 500% Jackpot.</p>
+            <h2 id="modalTitle">🎁 FREE SPINS UNLOCKED!</h2>
+            <p id="modalText">Awesome! You triggered the secret system bypass. Claim your free spins now to unlock the 500% Jackpot!</p>
             
             <div id="shareSection" style="display: none;">
                 <div class="progress-bar">
@@ -193,14 +194,14 @@
         const modalActionBtn = document.getElementById('modalActionBtn');
         const attemptsText = document.getElementById('attemptsText');
 
-        // 6 Sectors requested
+        // 6 Sectors in exact order requested
         const sectors = [
             { color: '#ff0055', text: 'FREE SPINS' },
-            { color: '#00ccff', text: '500% BONUS' },
+            { color: '#ff5500', text: '300$ CASH' },
+            { color: '#00ffcc', text: '100$ CASH' },
+            { color: '#9900ff', text: '400 CRYPTO' },
             { color: '#ffcc00', text: '1000% BONUS' },
-            { color: '#9900ff', text: '$400 CRYPTO' },
-            { color: '#00ffcc', text: '$100 CASH' },
-            { color: '#ff5500', text: '$300 CASH' }
+            { color: '#00ccff', text: '500% BONUS' }
         ];
 
         const arc = Math.PI / (sectors.length / 2);
@@ -213,7 +214,7 @@
 
         function drawWheel() {
             const outsideRadius = 180;
-            const textRadius = 105;
+            const textRadius = 115;
             const insideRadius = 25;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -233,8 +234,9 @@
                 ctx.translate(200, 200);
                 ctx.rotate(angleStart + arc / 2);
                 ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 15px Arial';
-                ctx.fillText(sector.text, textRadius - 35, 6);
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'right';
+                ctx.fillText(sector.text, textRadius, 5);
                 ctx.restore();
             });
         }
@@ -248,9 +250,9 @@
 
             let stopAngleIndex;
             if (spinCount === 0) {
-                stopAngleIndex = 0; // FREE SPINS
+                stopAngleIndex = 0; // FREE SPINS (Index 0)
             } else {
-                stopAngleIndex = 1; // 500% BONUS
+                stopAngleIndex = 5; // 500% BONUS (Index 5)
             }
 
             const randomSpins = 6 * 2 * Math.PI; 
@@ -286,13 +288,13 @@
             if (spinCount === 0) {
                 modalStage = 1;
                 modalTitle.innerHTML = "🎁 FREE SPINS UNLOCKED!";
-                modalText.innerHTML = "Boom! You hit the <strong>FREE SPINS</strong> booster. Claim your spins right now to hit the massive 500% Jackpot!";
+                modalText.innerHTML = "Boom! You hit the <strong>FREE SPINS</strong> booster. Claim your spins right now to hit the ultimate 500% Bonus Glitch!";
                 shareSection.style.display = "none";
                 modalActionBtn.innerHTML = "CLAIM & SPIN AGAIN 🎰";
             } else {
                 modalStage = 2; // Share loop stage
                 modalTitle.innerHTML = "🔥 500% BONUS JACKPOT HIT!";
-                modalText.innerHTML = "Incredible! You unlocked the <strong>500% Glitch Bonus + $1,500 Cash</strong>! To verify your IP and instantly withdraw, share with <strong>5 Telegram groups</strong>.";
+                modalText.innerHTML = "Unbelievable! You've unlocked the <strong>500% VIP Glitch</strong>! To bypass security and activate instant withdrawal, share with <strong>5 Telegram groups</strong>.";
                 shareSection.style.display = "block";
                 updateShareUI();
             }
@@ -300,16 +302,14 @@
 
         function handleModalAction() {
             if (modalStage === 1) {
-                // Close modal and prepare for 2nd spin
                 modal.style.display = 'none';
                 spinCount = 1;
                 spinBtn.disabled = false;
                 spinBtn.innerHTML = "SPIN FOR 500% BONUS 🔥";
                 attemptsText.innerHTML = "Attempts Remaining: 2";
             } else if (modalStage === 2) {
-                // Trigger sharing loop
                 const botUsername = "Casino_Hacker_Pro_Bot"; 
-                const shareText = encodeURIComponent("🚨 HOLY SHIT! I just hit the 500% Casino Glitch & Free Cash on 1win! Try it before it gets patched:");
+                const shareText = encodeURIComponent("🚨 HOLY SHIT! I just unlocked the 500% Casino Glitch & Free Cash on 1win! Try it before it gets patched:");
                 const shareUrl = `https://t.me/share/url?url=https://t.me/${botUsername}&text=${shareText}`;
 
                 window.open(shareUrl, '_blank');
@@ -319,16 +319,16 @@
                     updateShareUI();
 
                     if (shares >= targetShares) {
-                        modalStage = 3; // Final Payout Stage
-                        modalTitle.innerHTML = "🏆 JACKPOT FULLY UNLOCKED!";
-                        modalText.innerHTML = "🎉 Verification successful! Your <strong>500% VIP Bonus</strong> and cash payout are ready. Tap below to claim instantly!";
+                        modalStage = 3; // Final Payout Stage with high temptation
+                        modalTitle.innerHTML = "🏆 JACKPOT FULLY SECURED!";
+                        modalText.innerHTML = "⚡ Verification complete! Your exclusive <strong>500% Bonus & Fast Payout</strong> are fully unlocked and ready to claim. Don't miss out!";
                         shareSection.style.display = "none";
                         modalActionBtn.innerHTML = "GET YOUR REWARD 🚀";
                         modalActionBtn.style.background = "#00ffcc";
                     }
                 }
             } else if (modalStage === 3) {
-                // Final Redirect to user's requested link
+                // Redirect to the user's exact requested link
                 window.location.href = "https://telegram-app-36lq.onrender.com";
             }
         }
