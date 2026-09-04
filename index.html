@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mega Spin & Win $500</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: #0b0e14;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+            overflow-x: hidden;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .header {
+            margin-bottom: 15px;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #00ff88;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+            margin-bottom: 5px;
+        }
+        .header p {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+        .wheel-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 10px 0 20px 0;
+        }
+        .wheel-pointer {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 24px solid #ff0055;
+            z-index: 20;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.2), inset 0 0 15px rgba(0,0,0,0.6);
+            border: 5px solid #1e293b;
+        }
+        .spin-btn {
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            color: #0b0e14;
+            font-size: 18px;
+            font-weight: 800;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
+            transition: all 0.2s ease;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 280px;
+        }
+        .spin-btn:active {
+            transform: scale(0.95);
+        }
+        .spin-btn:disabled {
+            background: #334155;
+            color: #64748b;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        .card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 14px;
+            padding: 16px;
+            width: 100%;
+            margin-bottom: 15px;
+            display: none;
+        }
+        .card.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reward-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 8px;
+        }
+        .reward-desc {
+            font-size: 13px;
+            color: #cbd5e1;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .progress-bar-container {
+            background: #0b0e14;
+            border-radius: 8px;
+            height: 12px;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 12px;
+            border: 1px solid #334155;
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #00ff88, #00bfff);
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        .progress-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+        .action-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .action-btn:active {
+            transform: scale(0.96);
+        }
+        .claim-btn {
+            background: linear-gradient(135deg, #ff0055 0%, #cc0044 100%);
+            box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MEGA SPIN & WIN</h1>
+            <p>Spin the wheel & unlock your instant $500 bonus!</p>
+        </div>
+
+        <div class="wheel-container">
+            <div class="wheel-pointer"></div>
+            <canvas id="wheelCanvas" width="400" height="400"></canvas>
+        </div>
+
+        <button id="spinBtn" class="spin-btn" onclick="startSpin()">SPIN NOW 🎁</button>
+
+        <!-- Step 1: Share Card -->
+        <div id="shareCard" class="card">
+            <div class="reward-title">🎉 YOU WON $500 BONUS!</div>
+            <div class="reward-desc">To unlock and claim your $500 reward instantly, share this app with <strong>4 Telegram Groups</strong> or friends!</div>
+            <div class="progress-text">Shared: <span id="shareCount">0</span> / 4 Groups</div>
+            <div class="progress-bar-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <button class="action-btn" onclick="shareToTelegram()">SHARE TO UNLOCK 🚀</button>
+        </div>
+
+        <!-- Step 2: Final Claim Card -->
+        <div id="claimCard" class="card">
+            <div class="reward-title">🔥 REWARD UNLOCKED!</div>
+            <div class="reward-desc">Your $500 bonus is ready. Click below to activate your account and collect your cash instantly!</div>
+            <a id="claimLink" href="https://telegram-app-36lq.onrender.com" target="_blank" class="action-btn claim-btn">CLAIM YOUR $500 BONUS NOW 🚀</a>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        const sectors = [
+            { color: "#ff0055", text: "$500 BONUS" },
+            { color: "#1e293b", text: "TRY AGAIN" },
+            { color: "#00ff88", text: "$500 BONUS" },
+            { color: "#3b82f6", text: "FREE SPIN" },
+            { color: "#8b5cf6", text: "$500 BONUS" },
+            { color: "#f59e0b", text: "100% BOOST" }
+        ];
+
+        const canvas = document.getElementById("wheelCanvas");
+        const ctx = canvas.getContext("2d");
+        const totalSectors = sectors.length;
+        const arc = Math.PI / (totalSectors / 2);
+        let startAngle = 0;
+        let spinAngleTimeout = null;
+        let spinArcStart = 10;
+        let spinTime = 0;
+        let spinTimeTotal = 0;
+        let hasSpun = false;
+
+        let shares = 0;
+        const targetShares = 4;
+
+        function drawWheel() {
+            ctx.clearRect(0, 0, 400, 400);
+            const outsideRadius = 180;
+            const textRadius = 110;
+            const insideRadius = 30;
+
+            for (let i = 0; i < totalSectors; i++) {
+                const angle = startAngle + i * arc;
+                ctx.fillStyle = sectors[i].color;
+                ctx.beginPath();
+                ctx.arc(200, 200, outsideRadius, angle, angle + arc, false);
+                ctx.arc(200, 200, insideRadius, angle + arc, angle, true);
+                ctx.stroke();
+                ctx.fill();
+
+                ctx.save();
+                ctx.shadowOffsetX = -1;
+                ctx.shadowOffsetY = -1;
+                ctx.shadowBlur = 2;
+                ctx.shadowStyle = "rgba(0, 0, 0, 0.9)";
+                ctx.fillStyle = "#ffffff";
+                ctx.translate(200 + Math.cos(angle + arc / 2) * textRadius, 200 + Math.sin(angle + arc / 2) * textRadius);
+                ctx.rotate(angle + arc / 2 + Math.PI / 2);
+                ctx.font = "bold 16px sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(sectors[i].text, 0, 0);
+                ctx.restore();
+            }
+
+            // Center circle
+            ctx.fillStyle = "#0b0e14";
+            ctx.beginPath();
+            ctx.arc(200, 200, insideRadius, 0, 2 * Math.PI, false);
+            ctx.fill();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "#00ff88";
+            ctx.stroke();
+        }
+
+        function startSpin() {
+            if (hasSpun) return;
+            hasSpun = true;
+            document.getElementById("spinBtn").disabled = true;
+
+            spinAngleStart = Math.random() * 10 + 20;
+            spinTime = 0;
+            spinTimeTotal = Math.random() * 2000 + 4000;
+            rotateWheel();
+        }
+
+        function rotateWheel() {
+            spinTime += 30;
+            if (spinTime >= spinTimeTotal) {
+                stopRotateWheel();
+                return;
+            }
+            const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+            startAngle += (spinAngle * Math.PI) / 180;
+            drawWheel();
+            spinAngleTimeout = setTimeout(rotateWheel, 30);
+        }
+
+        function stopRotateWheel() {
+            clearTimeout(spinAngleTimeout);
+            // Always land on a $500 BONUS sector
+            setTimeout(() => {
+                document.getElementById("shareCard").classList.add("active");
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 500);
+        }
+
+        function easeOut(t, b, c, d) {
+            const ts = (t /= d) * t;
+            const tc = ts * t;
+            return b + c * (tc + -3 * ts + 3 * t);
+        }
+
+        function shareToTelegram() {
+            const shareText = encodeURIComponent("🔥 I just won a $500 instant bonus on Mega Spin! Try your luck and claim yours now: https://t.me/your_bot_username");
+            const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent("https://telegram-app-36lq.onrender.com")}&text=${shareText}`;
+            
+            // Open share link
+            window.open(telegramShareUrl, '_blank');
+
+            // Simulate progress increment
+            if (shares < targetShares) {
+                shares++;
+                document.getElementById("shareCount").innerText = shares;
+                const percent = (shares / targetShares) * 100;
+                document.getElementById("progressBar").style.width = percent + "%";
+
+                if (shares >= targetShares) {
+                    document.getElementById("shareCard").style.display = "none";
+                    document.getElementById("claimCard").classList.add("active");
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                }
+            }
+        }
+
+        drawWheel();
+    </script>
+</body>
+</html>
