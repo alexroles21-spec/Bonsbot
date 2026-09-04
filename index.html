@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1WIN VIP GLITCH - Spin & Win</title>
+    <title>VIP CASINO GLITCH - 1WIN</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -13,7 +13,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background: radial-gradient(circle, #1a0033 0%, #0d001a 100%);
+            background: radial-gradient(circle, #0f0c29 0%, #302b63 50%, #24243e 100%);
             color: #ffffff;
             display: flex;
             flex-direction: column;
@@ -32,22 +32,30 @@
             margin-bottom: 15px;
         }
         .header h1 {
-            font-size: 24px;
+            font-size: 22px;
             color: #00ffcc;
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            margin-bottom: 5px;
         }
         .header p {
             font-size: 13px;
             color: #ffcc00;
-            margin-top: 5px;
             font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
+        }
+        .attempts-counter {
+            font-size: 12px;
+            color: #ff3366;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
         .wheel-container {
             position: relative;
-            width: 300px;
-            height: 300px;
+            width: 290px;
+            height: 290px;
             margin: 0 auto 20px auto;
         }
         .pointer {
@@ -57,73 +65,75 @@
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 30px solid #ff0055;
+            border-left: 14px solid transparent;
+            border-right: 14px solid transparent;
+            border-top: 28px solid #ff0055;
             z-index: 10;
-            filter: drop-shadow(0 0 5px #ff0055);
+            filter: drop-shadow(0 0 8px #ff0055);
         }
         canvas {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.3), inset 0 0 15px rgba(0,0,0,0.8);
+            box-shadow: 0 0 35px rgba(0, 255, 204, 0.4), inset 0 0 20px rgba(0,0,0,0.9);
             border: 5px solid #00ffcc;
         }
         .btn {
-            background: linear-gradient(135deg, #00ffcc 0%, #0099ff 100%);
+            background: linear-gradient(135deg, #00ffcc 0%, #0077ff 100%);
             color: #0d001a;
             border: none;
-            padding: 14px 30px;
+            padding: 15px 30px;
             font-size: 18px;
             font-weight: bold;
             border-radius: 30px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.6);
             width: 100%;
             text-transform: uppercase;
             transition: 0.2s;
+            letter-spacing: 1px;
         }
         .btn:active {
-            transform: scale(0.95);
+            transform: scale(0.96);
         }
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.88);
             justify-content: center;
             align-items: center;
             z-index: 100;
             padding: 20px;
         }
         .modal-content {
-            background: linear-gradient(135deg, #2a0845 0%, #6441A5 100%);
+            background: linear-gradient(135deg, #23074d 0%, #cc5333 100%);
             padding: 25px;
             border-radius: 20px;
             border: 2px solid #00ffcc;
             width: 100%;
             max-width: 340px;
             text-align: center;
-            box-shadow: 0 0 30px rgba(0,255,204,0.4);
+            box-shadow: 0 0 35px rgba(0,255,204,0.5);
         }
         .modal-content h2 {
             color: #00ffcc;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-size: 20px;
+            text-shadow: 0 0 10px rgba(0,255,204,0.6);
         }
         .modal-content p {
-            font-size: 14px;
+            font-size: 13.5px;
             margin-bottom: 20px;
-            color: #ddd;
-            line-height: 1.4;
+            color: #f1f1f1;
+            line-height: 1.5;
         }
         .progress-bar {
             background: #111;
             border-radius: 10px;
-            height: 15px;
+            height: 14px;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             overflow: hidden;
             border: 1px solid #444;
         }
@@ -139,9 +149,11 @@
 
     <div class="container">
         <div class="header">
-            <h1>⚡ 1WIN VIP GLITCH ⚡</h1>
-            <p id="instruction">SPIN #1: UNLOCK FREE SPINS & BOOSTERS!</p>
+            <h1>🔥 INSTANT VIP CASH GLITCH 🔥</h1>
+            <p>⚡ UNLOCK UNLIMITED FAST PAYOUTS NOW ⚡</p>
         </div>
+
+        <div class="attempts-counter" id="attemptsText">Attempts Remaining: 3</div>
 
         <div class="wheel-container">
             <div class="pointer"></div>
@@ -151,18 +163,20 @@
         <button class="btn" id="spinBtn" onclick="startSpin()">SPIN NOW 🚀</button>
     </div>
 
-    <!-- Modal for Sharing Loop / Rewards -->
+    <!-- Modal for Rewards / Sharing / Final Payout -->
     <div class="modal" id="modal">
         <div class="modal-content">
-            <h2 id="modalTitle">🎉 JACKPOT UNLOCKED!</h2>
-            <p id="modalText">You won <strong>500% BONUS + $750 GLITCH</strong>! Share with 4 friends or groups on Telegram to activate payout.</p>
+            <h2 id="modalTitle">🎉 FREE SPINS UNLOCKED!</h2>
+            <p id="modalText">You triggered the secret system booster! Click below to claim and spin for the ultimate 500% Jackpot.</p>
             
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
+            <div id="shareSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p id="shareCountText" style="font-size: 11px; color: #ffcc00; margin-bottom: 12px; font-weight: bold;">Shared: 0 / 5 Groups</p>
             </div>
-            <p id="shareCountText" style="font-size: 12px; color: #ffcc00; margin-bottom: 15px;">Shares: 0 / 4</p>
 
-            <button class="btn" id="modalActionBtn" onclick="handleShare()">SHARE TO TELEGRAM (0/4)</button>
+            <button class="btn" id="modalActionBtn" onclick="handleModalAction()">CLAIM & SPIN AGAIN 🎰</button>
         </div>
     </div>
 
@@ -173,31 +187,34 @@
         const modal = document.getElementById('modal');
         const modalTitle = document.getElementById('modalTitle');
         const modalText = document.getElementById('modalText');
+        const shareSection = document.getElementById('shareSection');
         const progressFill = document.getElementById('progressFill');
         const shareCountText = document.getElementById('shareCountText');
         const modalActionBtn = document.getElementById('modalActionBtn');
-        const instruction = document.getElementById('instruction');
+        const attemptsText = document.getElementById('attemptsText');
 
+        // 6 Sectors requested
         const sectors = [
-            { color: '#ff0055', text: 'FREE SPIN' },
-            { color: '#00ccff', text: '$100 CASH' },
-            { color: '#ffcc00', text: '500% BONUS' },
-            { color: '#9900ff', text: '$300 CASH' },
-            { color: '#00ffcc', text: 'VIP ACCESS' },
-            { color: '#ff5500', text: '$750 GLITCH' }
+            { color: '#ff0055', text: 'FREE SPINS' },
+            { color: '#00ccff', text: '500% BONUS' },
+            { color: '#ffcc00', text: '1000% BONUS' },
+            { color: '#9900ff', text: '$400 CRYPTO' },
+            { color: '#00ffcc', text: '$100 CASH' },
+            { color: '#ff5500', text: '$300 CASH' }
         ];
 
         const arc = Math.PI / (sectors.length / 2);
         let angle = 0;
-        let spinCount = 0; 
+        let spinCount = 0; // 0 = first spin, 1 = second spin
         let shares = 0;
-        const targetShares = 4;
+        const targetShares = 5;
         let isSpinning = false;
+        let modalStage = 1; // 1 = First Reward, 2 = Share Loop, 3 = Final Payout
 
         function drawWheel() {
             const outsideRadius = 180;
-            const textRadius = 110;
-            const insideRadius = 30;
+            const textRadius = 105;
+            const insideRadius = 25;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -216,8 +233,8 @@
                 ctx.translate(200, 200);
                 ctx.rotate(angleStart + arc / 2);
                 ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 16px Arial';
-                ctx.fillText(sector.text, textRadius - 30, 6);
+                ctx.font = 'bold 15px Arial';
+                ctx.fillText(sector.text, textRadius - 35, 6);
                 ctx.restore();
             });
         }
@@ -231,12 +248,12 @@
 
             let stopAngleIndex;
             if (spinCount === 0) {
-                stopAngleIndex = 0; // FREE SPIN
+                stopAngleIndex = 0; // FREE SPINS
             } else {
-                stopAngleIndex = 2; // 500% BONUS
+                stopAngleIndex = 1; // 500% BONUS
             }
 
-            const randomSpins = 5 * 2 * Math.PI; 
+            const randomSpins = 6 * 2 * Math.PI; 
             const sectorAngle = arc;
             const targetAngle = randomSpins + (sectors.length - stopAngleIndex) * sectorAngle - (sectorAngle / 2);
 
@@ -257,7 +274,7 @@
                     angle = currentAngle + targetAngle;
                     drawWheel();
                     isSpinning = false;
-                    setTimeout(showRewardModal, 500);
+                    setTimeout(showRewardModal, 400);
                 }
             }
 
@@ -267,55 +284,60 @@
         function showRewardModal() {
             modal.style.display = 'flex';
             if (spinCount === 0) {
-                modalTitle.innerHTML = "🎁 FREE SPIN UNLOCKED!";
-                modalText.innerHTML = "You hit the <strong>FREE SPIN</strong> booster! Tap below to claim and spin for the ultimate 500% Bonus Glitch.";
+                modalStage = 1;
+                modalTitle.innerHTML = "🎁 FREE SPINS UNLOCKED!";
+                modalText.innerHTML = "Boom! You hit the <strong>FREE SPINS</strong> booster. Claim your spins right now to hit the massive 500% Jackpot!";
+                shareSection.style.display = "none";
                 modalActionBtn.innerHTML = "CLAIM & SPIN AGAIN 🎰";
             } else {
-                modalTitle.innerHTML = "🔥 500% BONUS JACKPOT!";
-                modalText.innerHTML = "You unlocked the main <strong>500% Glitch + $750</strong>! Share with 4 friends or Telegram groups to instantly withdraw.";
+                modalStage = 2; // Share loop stage
+                modalTitle.innerHTML = "🔥 500% BONUS JACKPOT HIT!";
+                modalText.innerHTML = "Incredible! You unlocked the <strong>500% Glitch Bonus + $1,500 Cash</strong>! To verify your IP and instantly withdraw, share with <strong>5 Telegram groups</strong>.";
+                shareSection.style.display = "block";
                 updateShareUI();
             }
         }
 
-        function handleShare() {
-            if (spinCount === 0) {
+        function handleModalAction() {
+            if (modalStage === 1) {
+                // Close modal and prepare for 2nd spin
                 modal.style.display = 'none';
                 spinCount = 1;
                 spinBtn.disabled = false;
                 spinBtn.innerHTML = "SPIN FOR 500% BONUS 🔥";
-                instruction.innerHTML = "SPIN #2: HIT THE 500% JACKPOT!";
-                return;
-            }
+                attemptsText.innerHTML = "Attempts Remaining: 2";
+            } else if (modalStage === 2) {
+                // Trigger sharing loop
+                const botUsername = "Casino_Hacker_Pro_Bot"; 
+                const shareText = encodeURIComponent("🚨 HOLY SHIT! I just hit the 500% Casino Glitch & Free Cash on 1win! Try it before it gets patched:");
+                const shareUrl = `https://t.me/share/url?url=https://t.me/${botUsername}&text=${shareText}`;
 
-            const botUsername = "Casino_Hacker_Pro_Bot"; 
-            const shareText = encodeURIComponent("🔥 I just unlocked the 500% Casino Glitch & Free Cash on 1win! Try it here:");
-            const shareUrl = `https://t.me/share/url?url=https://t.me/${botUsername}&text=${shareText}`;
+                window.open(shareUrl, '_blank');
 
-            window.open(shareUrl, '_blank');
+                if (shares < targetShares) {
+                    shares++;
+                    updateShareUI();
 
-            if (shares < targetShares) {
-                shares++;
-                updateShareUI();
-
-                if (shares >= targetShares) {
-                    modalActionBtn.innerHTML = "ACCESS 1WIN AFFILIATE LINK 🚀";
-                    modalActionBtn.style.background = "#00ffcc";
-                    modalActionBtn.onclick = redirectToAffiliate;
-                    modalTitle.innerHTML = "🏆 GLITCH UNLOCKED!";
-                    modalText.innerHTML = "Verification complete! Click below to access the secure 1win payout portal.";
+                    if (shares >= targetShares) {
+                        modalStage = 3; // Final Payout Stage
+                        modalTitle.innerHTML = "🏆 JACKPOT FULLY UNLOCKED!";
+                        modalText.innerHTML = "🎉 Verification successful! Your <strong>500% VIP Bonus</strong> and cash payout are ready. Tap below to claim instantly!";
+                        shareSection.style.display = "none";
+                        modalActionBtn.innerHTML = "GET YOUR REWARD 🚀";
+                        modalActionBtn.style.background = "#00ffcc";
+                    }
                 }
+            } else if (modalStage === 3) {
+                // Final Redirect to user's requested link
+                window.location.href = "https://telegram-app-36lq.onrender.com";
             }
         }
 
         function updateShareUI() {
             const percentage = (shares / targetShares) * 100;
             progressFill.style.width = percentage + '%';
-            shareCountText.innerHTML = `Shares: ${shares} / ${targetShares}`;
+            shareCountText.innerHTML = `Shared: ${shares} / ${targetShares} Groups`;
             modalActionBtn.innerHTML = `SHARE TO TELEGRAM (${shares}/${targetShares})`;
-        }
-
-        function redirectToAffiliate() {
-            window.location.href = "https://1win.pro/?open=register"; 
         }
     </script>
 </body>
