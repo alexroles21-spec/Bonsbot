@@ -178,8 +178,6 @@
         const modalActionBtn = document.getElementById('modalActionBtn');
         const instruction = document.getElementById('instruction');
 
-        // 6 Sectors: 
-        // 0: FREE SPIN, 1: $100, 2: 500% BONUS, 3: $300, 4: VIP ACCESS, 5: $750 GLITCH
         const sectors = [
             { color: '#ff0055', text: 'FREE SPIN' },
             { color: '#00ccff', text: '$100 CASH' },
@@ -191,7 +189,7 @@
 
         const arc = Math.PI / (sectors.length / 2);
         let angle = 0;
-        let spinCount = 0; // Tracks number of spins (0 = first spin, 1 = second spin)
+        let spinCount = 0; 
         let shares = 0;
         const targetShares = 4;
         let isSpinning = false;
@@ -228,35 +226,29 @@
 
         function startSpin() {
             if (isSpinning) return;
-            isSpinning =лоба = true;
+            isSpinning = true;
             spinBtn.disabled = true;
 
             let stopAngleIndex;
-
-            // Rigged Logic: 
-            // First spin (spinCount === 0) -> lands on Sector 0 ('FREE SPIN')
-            // Second spin (spinCount === 1) -> lands on Sector 2 ('500% BONUS')
             if (spinCount === 0) {
                 stopAngleIndex = 0; // FREE SPIN
             } else {
                 stopAngleIndex = 2; // 500% BONUS
             }
 
-            // Calculate target angle to land exactly on the index
-            const randomSpins = 5 * 2 * Math.PI; // 5 full rotations
+            const randomSpins = 5 * 2 * Math.PI; 
             const sectorAngle = arc;
             const targetAngle = randomSpins + (sectors.length - stopAngleIndex) * sectorAngle - (sectorAngle / 2);
 
             let currentAngle = angle;
             let startTime = null;
-            const duration = 3500; // 3.5 seconds
+            const duration = 3500; 
 
             function animate(currentTime) {
                 if (!startTime) startTime = currentTime;
                 const progress = (currentTime - startTime) / duration;
 
                 if (progress < 1) {
-                    // Ease out cubic
                     const easeOut = 1 - Math.pow(1 - progress, 3);
                     angle = currentAngle + targetAngle * easeOut;
                     drawWheel();
@@ -265,8 +257,6 @@
                     angle = currentAngle + targetAngle;
                     drawWheel();
                     isSpinning = false;
-                    
-                    // Trigger respective reward modal
                     setTimeout(showRewardModal, 500);
                 }
             }
@@ -289,7 +279,6 @@
 
         function handleShare() {
             if (spinCount === 0) {
-                // First spin reward claim -> close modal, prepare for second rigged spin
                 modal.style.display = 'none';
                 spinCount = 1;
                 spinBtn.disabled = false;
@@ -298,8 +287,7 @@
                 return;
             }
 
-            // Second spin share loop
-            const botUsername = "Casino_Hacker_Pro_Bot"; // Your bot username
+            const botUsername = "Casino_Hacker_Pro_Bot"; 
             const shareText = encodeURIComponent("🔥 I just unlocked the 500% Casino Glitch & Free Cash on 1win! Try it here:");
             const shareUrl = `https://t.me/share/url?url=https://t.me/${botUsername}&text=${shareText}`;
 
@@ -326,8 +314,7 @@
             modalActionBtn.innerHTML = `SHARE TO TELEGRAM (${shares}/${targetShares})`;
         }
 
-        function redirectToAffiliate {
-            // Replace with your 1win affiliate link
+        function redirectToAffiliate() {
             window.location.href = "https://1win.pro/?open=register"; 
         }
     </script>
